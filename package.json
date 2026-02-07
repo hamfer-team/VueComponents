@@ -1,0 +1,42 @@
+{
+  "name": "@hamfer/vue-components",
+  "version": "0.1.0",
+  "description": "Simple vue components",
+  "keywords": [
+    "vuejs",
+    "hamfer",
+    "components"
+  ],
+  "homepage": "https://github.com/hamfer-team/VueComponents#readme",
+  "bugs": {
+    "url": "https://github.com/hamfer-team/VueComponents/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hamfer-team/VueComponents.git"
+  },
+  "license": "MIT",
+  "author": "hamfer.team",
+  "type": "module",
+  "main": "src/index.js",
+  "scripts": {
+    "build": "vite build --mode production ",
+    "dev": "vite build --mode development",
+    "lint": "eslint",
+    "lint:fix": "eslint --fix",
+    "ts:check": "vue-tsc -p src/tsconfig.json --noEmit",
+    "watch": "vite build --mode development --watch"
+  },
+  "dependencies": {
+    "vue": "^3.5.27",
+    "vue-router": "^5.0.2"
+  },
+  "devDependencies": {
+    "@types/node": "^25.1.0",
+    "@vue/tsconfig": "^0.8.1",
+    "eslint": "^9.39.2",
+    "typescript": "^5.9.3",
+    "vite": "^6.4.1",
+    "vue-tsc": "^2.2.12"
+  }
+}

@@ -1,0 +1,26 @@
+{
+	"extends": "@vue/tsconfig",
+	"exclude": ["vitest.config.ts", "tests"],
+
+	"compilerOptions": {
+		"allowJs": true,
+		"allowImportingTsExtensions": true,
+		"allowSyntheticDefaultImports": true,
+		"lib": [
+			"DOM",
+			"ESNext",
+		],
+		"target": "ESNext",
+		"module": "ESNext",
+		"moduleResolution": "Bundler",
+		"noImplicitAny": false,
+		"outDir": "./dist",
+		"rootDir": ".",
+		"strict": true,
+		"noEmit": true,
+	},
+
+	"vueCompilerOptions": {
+		"target": 3.5,
+	},
+}

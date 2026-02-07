@@ -1,0 +1,54 @@
+:root {
+  /* Needed from Global Settings */
+  --font-family: IRANYekanXFaNum;
+  --font-size: 14px;
+  --font-size-lower: 12px;
+
+  --primary-color: #004f83;
+  --primary-color-light: #006096;
+  --primary-color-dark: #002e5e;
+
+  --gray-color: #676a67;
+  --gray-color-light: #8c8d8f;
+  --gray-color-dark: #454447;
+
+  /* HamferVueFormInput settings */
+  --required-input-star-color: #af0e0e;
+
+  /* HamferVueButton settings */
+  --button-border-radius: 8px;
+
+  /* HamferVueText settings */
+  --input-border-radius: 4px;
+  
+  /* HamferVueGauge settings */
+  --gauge-border-radius: 4px;
+  --gauge-width: 320px;
+  --gauge-value-font-size: 40px;
+
+  /* HamferVueGrid settings */
+  --grid-no-data-color: #810000;
+  --grid-loading-size: 32px;
+  --grid-row-border-color: #d9d9d9;
+  --grid-row-border-radius: 4px;
+  --grid-row-background-color: #f0f0f0;
+  --grid-row-alternative-background-color: #e8e4ff;
+  --grid-cell-label-color: white;
+
+  /* HamferGroupInput settings */
+  --group-input-border-radius-top: 6px;
+  --group-input-border-radius-bottom: 2px;
+
+  /* HamferVueModal settings */
+  --modal-width: 25vw;
+  --modal-background-color: white;
+  --modal-border-radius: 20px;
+  --modal-mask-background-color: rgba(0, 0, 0, 0.6);
+
+  /* HamferVuePage settings */
+  --page-title-font-size: 32px;
+  --page-title-height: 72px;
+
+  /* HamferVueToggle settings */
+  --toggle-size: 22px;
+}
