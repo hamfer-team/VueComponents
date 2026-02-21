@@ -3,21 +3,12 @@
 	"exclude": ["vitest.config.ts", "tests"],
 
 	"compilerOptions": {
-		"allowJs": true,
-		"allowImportingTsExtensions": true,
-		"allowSyntheticDefaultImports": true,
-		"lib": [
-			"DOM",
-			"ESNext",
-		],
-		"target": "ESNext",
-		"module": "ESNext",
-		"moduleResolution": "Bundler",
-		"noImplicitAny": false,
-		"outDir": "./dist",
-		"rootDir": ".",
-		"strict": true,
-		"noEmit": true,
+		"noEmit": false,							// This is important to generate type declaration files
+		"emitDeclarationOnly": true, 	// Prevents the generation of JS files, which is handled by Vite
+		"declaration": true,
+  	"declarationMap": true,
+  	"outDir": "dist/types",
+  	"rootDir": "src"
 	},
 
 	"vueCompilerOptions": {
