@@ -1,7 +1,7 @@
 <template>
   <div 
     class="form-input"
-    :class="class"
+    :class="{ class: true }"
     :id="`${id}FormInput`"
   >
     <label 

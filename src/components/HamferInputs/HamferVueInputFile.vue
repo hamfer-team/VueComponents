@@ -9,7 +9,7 @@
       :readonly="locked || disabled"
       :disabled="disabled"
       @change="fileChanged"
-      @input="$emit('update:modelValue', $event.target!.files(0))"
+      @input="$emit('update:modelValue', ($event.target as EventTargetFiles).files[0])"
     />
   </div>
 </template>
@@ -29,6 +29,8 @@ input[readonly] {
 </style>
 
 <script lang="ts">
+import type { EventTargetFiles } from '../../core/UiEventTypes';
+
 export default {
   name: "HamferInputFile",
   props: {

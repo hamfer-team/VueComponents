@@ -5,18 +5,18 @@ export interface InputDeviceCapabilities {
 }
 
 export interface UiEventType extends Event {
-  readonly detail: number;
-  readonly sourceCapabilities: InputDeviceCapabilities;
   readonly view: object;
+  readonly detail: number;
 }
 
 //#region Input Events
 
 export interface InputEventType extends UiEventType {
   readonly data: string | null;
-  readonly dataTransfer: ObjectType; // https://developer.mozilla.org/en-US/docs/Web/API/DataTransfer
-  readonly inputType: string;
   readonly isComposing: boolean;
+  readonly inputType: string;
+  
+  readonly dataTransfer: ObjectType; // https://developer.mozilla.org/en-US/docs/Web/API/DataTransfer
   getTargetRanges: () => object[]; // https://developer.mozilla.org/en-US/docs/Web/API/StaticRange
 }
 

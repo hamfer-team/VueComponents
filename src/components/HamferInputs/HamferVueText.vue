@@ -13,14 +13,14 @@
       :disabled="disabled"
       :value="valueModifier(modelValue)"
       @input="
-        (e: any) => {
+        (e: Event) => {
           if (e.target && 'value' in e.target) {
             $emit('update:modelValue', valueUnmodifier(e.target.value));
           }
         }
       "
-      @keydown="(e: KeyDownEventType) => keyDownHandler(e)"
-      @keyup="keyUpHandler"
+      @keydown="(e: Event) => keyDownHandler(e as KeyDownEventType)"
+      @keyup="(e: Event) => keyUpHandler(e as KeyUpEventType)"
       :key="key2rerender"
       :maxlength="maxLength ?? (type === 'date' ? '10' : type === 'money' ? '23' : '40')"
     />

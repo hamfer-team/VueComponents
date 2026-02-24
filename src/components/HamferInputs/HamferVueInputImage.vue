@@ -9,7 +9,7 @@
       :readonly="locked || disabled"
       :disabled="disabled"
       @change="(e: any) => onFileChange(e)"
-      @input="$emit('update:modelValue', $event.target!.files[0])"
+      @input="$emit('update:modelValue', ($event.target as EventTargetFiles).files[0])"
     />
     <img
       :src="url ?? placeholder ?? '#'"
@@ -58,7 +58,7 @@ div.file-input-container img[readonly] {
 </style>
 
 <script lang="ts">
-import type { InputFileEventType } from "../../core/UiEventTypes.ts";
+import type { EventTargetFiles, InputFileEventType } from "../../core/UiEventTypes.ts";
 
 export default {
   name: "HamferInputImage",

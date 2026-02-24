@@ -83,18 +83,18 @@ export const LetsVerify = {
 
     let verified: boolean = true;
     let message: string | undefined = undefined;
-    const formModel = hamferFormModel as object;
+    const formModel = hamferFormModel;
     Object.keys(formModel).forEach((prop: string) => {
       if (verified) {
         const model = formModel[prop];
-        const modelValue = valueExtractor ? valueExtractor(model.value) : model.value;
+        const modelValue = valueExtractor ? valueExtractor(model?.value) : model?.value;
         const valueIsEmpty = tools.isEmpty(modelValue);
 
-        if (model.required && valueIsEmpty) {
+        if (model?.required && valueIsEmpty) {
           message = `اطلاعات ${model.title} نمی‌تواند خالی باشد.`;
           verified = false;
         }
-        if (verified && model.validator && !valueIsEmpty && !model.validator(modelValue)) {
+        if (verified && model?.validator && !valueIsEmpty && modelValue && !model.validator(modelValue)) {
           message = `اطلاعات ${model.title} به درستی وارد نشده است.`;
           verified = false;
         }

@@ -1,6 +1,6 @@
 <template>
   <div class="gauge">
-    <div class="title" @click="onClick">
+    <div class="title" @click="onclick">
       <i :class="icon" v-if="icon"></i>
       {{ title }}:
     </div>
@@ -56,6 +56,14 @@ export default {
     onClick: {
       type: Function,
     },
+  },
+  setup(props) {
+    const onclick = () => {
+      if (props.onClick) {
+        props.onClick();
+      }
+    };
+    return { onclick };
   },
 };
 </script>

@@ -31,13 +31,13 @@
         </i>
       </h4>
       <slot name="buttons">
-        <mol-button title="افزودن" @Click="addAction" v-if="addAction" />
+        <mol-button title="افزودن" @Click="addaction" v-if="addAction" />
       </slot>
     </div>
     <table v-if="dataFetched">
       <thead>
         <th v-for="column in columns" v-bind:key="column.key" :style="{ width: column.width }">
-          <div v-for="columnInfo in [columnsInfo[column.key]]" v-bind:key="columnInfo">
+          <div v-for="columnInfo in [columnsInfo[column.key]]" v-bind:key="columnInfo?.key">
             <div class="column-title">
               <div
                 :class="{
@@ -59,34 +59,36 @@
                 <i
                   class="fa fa-ellipsis-v"
                   v-if="
-                    !columnInfo.isFiltered &&
-                    !columnInfo.isSortedAscending &&
-                    !columnInfo.isSortedDescending
+                    !(columnInfo?.isFiltered ?? false) &&
+                    !(columnInfo?.isSortedAscending ?? false) &&
+                    !(columnInfo?.isSortedDescending ?? false)
                   "
                 ></i>
-                <i class="fa fa-filter" v-if="columnInfo.isFiltered"></i>
-                <i class="fa fa-sort-amount-down-alt" v-if="columnInfo.isSortedAscending"></i>
-                <i class="fa fa-sort-amount-down" v-if="columnInfo.isSortedDescending"></i>
+                <i class="fa fa-filter" v-if="columnInfo?.isFiltered"></i>
+                <i class="fa fa-sort-amount-down-alt" v-if="columnInfo?.isSortedAscending"></i>
+                <i class="fa fa-sort-amount-down" v-if="columnInfo?.isSortedDescending"></i>
               </div>
             </div>
             <div v-if="showColumnsConfig" class="column-config">
               <div v-if="column.canFiltered" class="config-filter">
                 <i class="fa fa-filter"></i>
-                <input type="text" v-model="columnInfo.filter" />
+                <input type="text" v-model="columnInfo?.filter" />
               </div>
               <div v-if="column.isSortable" class="config-sort">
                 <i class="fa fa-sort-amount-down"></i>
                 <select
                   @change="
-                    (e) => {
-                      columnInfo.sort =
-                        e.target && 'selectedIndex' in e.target ? e.target.selectedIndex : -1;
+                    (e: Event) => {
+                      if (columnInfo) {
+                        columnInfo.sort =
+                          e.target && 'selectedIndex' in e.target ? e.target.selectedIndex as number : -1;
+                      }
                     }
                   "
                 >
                   <option></option>
-                  <option :selected="columnInfo.sort === 1">کم به زیاد</option>
-                  <option :selected="columnInfo.sort === 2">زیاد به کم</option>
+                  <option :selected="columnInfo?.sort === 1">کم به زیاد</option>
+                  <option :selected="columnInfo?.sort === 2">زیاد به کم</option>
                 </select>
               </div>
             </div>
@@ -373,6 +375,16 @@ import {
 import HamferGridRow from "./HamferVueGridRow.vue";
 import type { PrimitiveType } from "../../core/Types.ts";
 import HamferButton from "../HamferButton/HamferButton.vue";
+import type { InputEventType } from "../../core/UiEventTypes.ts";
+
+interface ColumnsInfo {
+  key: string;
+  isFiltered: boolean,
+  isSortedAscending: boolean,
+  isSortedDescending: boolean,
+  filter: string,
+  sort: number,
+}
 
 export default {
   name: "HamferGrid",
@@ -410,7 +422,7 @@ export default {
   },
   setup(props) {
     const dataFetched = ref<boolean>(false);
-    const columnsInfo = ref<object>({});
+    const columnsInfo = ref<Record<string, ColumnsInfo>>({});
     const showColumnsConfig = ref<boolean>(false);
     const actionsKey = HamferGridColumnSpecial.Actions;
     const gotDatas = ref<object[]>([]);
@@ -420,18 +432,25 @@ export default {
       props.paginationDefault ?? new HamferGridPagination(),
     );
     if ((pagination.value?.page ?? 0) < 1) pagination.value.page = 1;
+    const addaction = () => {
+      if (props.addAction) {
+        props.addAction();
+      }
+    };
 
     const clearColumnsInfo = () => {
       showColumnsConfig.value = false;
       props.columns.forEach((col) => {
         if (col.isSortable || col.canFiltered) {
-          columnsInfo.value[col.key] = {
+          const colInfo: ColumnsInfo = {
+            key: col.key,
             isFiltered: false,
             isSortedAscending: false,
             isSortedDescending: false,
             filter: "",
             sort: 0,
           };
+          columnsInfo.value[col.key] = colInfo;
         }
       });
     };
@@ -493,28 +512,30 @@ export default {
     };
 
     const applyConfig = async () => {
-      const sort: object = {};
-      const where: object = {};
+      const sort: Record<string, string> = {};
+      const where: Record<string, string> = {};
       Object.keys(columnsInfo.value).forEach((key: string) => {
-        if (columnsInfo.value[key].filter !== "") {
-          where[key] = columnsInfo.value[key].filter;
-          columnsInfo.value[key].isFiltered = true;
-        } else {
-          columnsInfo.value[key].isFiltered = false;
-        }
+        if(columnsInfo.value[key]) {
+          if (columnsInfo.value[key].filter !== "") {
+            where[key] = columnsInfo.value[key].filter;
+            columnsInfo.value[key].isFiltered = true;
+          } else {
+            columnsInfo.value[key].isFiltered = false;
+          }
 
-        if (columnsInfo.value[key].sort === 1) {
-          sort[key] = "asc";
-          columnsInfo.value[key].isSortedAscending = true;
-        } else {
-          columnsInfo.value[key].isSortedAscending = false;
-        }
+          if (columnsInfo.value[key].sort === 1) {
+            sort[key] = "asc";
+            columnsInfo.value[key].isSortedAscending = true;
+          } else {
+            columnsInfo.value[key].isSortedAscending = false;
+          }
 
-        if (columnsInfo.value[key].sort === 2) {
-          sort[key] = "desc";
-          columnsInfo.value[key].isSortedDescending = true;
-        } else {
-          columnsInfo.value[key].isSortedDescending = false;
+          if (columnsInfo.value[key].sort === 2) {
+            sort[key] = "desc";
+            columnsInfo.value[key].isSortedDescending = true;
+          } else {
+            columnsInfo.value[key].isSortedDescending = false;
+          }
         }
       });
 
@@ -602,6 +623,8 @@ export default {
     //clearColumnsInfo();
 
     return {
+      addaction,
+
       getValue,
       actionsKey,
 

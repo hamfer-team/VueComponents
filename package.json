@@ -21,7 +21,7 @@
   "main": "src/index.ts",
   "scripts": {
     "build:clear": "rimraf dist coverage",
-    "build:types": "vue-ts",
+    "build:types": "vue-tsc",
     "build:vite": "vite build",
     "build": "run-s build:* ",
     "lint": "eslint",

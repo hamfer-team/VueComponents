@@ -8,7 +8,7 @@
 		"declaration": true,
   	"declarationMap": true,
   	"outDir": "dist/types",
-  	"rootDir": "src"
+  	"rootDir": "."
 	},
 
 	"vueCompilerOptions": {
