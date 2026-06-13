@@ -9,7 +9,7 @@ export default defineConfig({
     dts({
       entryRoot: "./src",
       outputDir: ["./dist/es/src", "./dist/lib/src"],
-      tsConfigFilePath: "../../tsconfig.json",
+      tsConfigFilePath: "tsconfig.json",
     }),
     DefineOptions(),
   ],
